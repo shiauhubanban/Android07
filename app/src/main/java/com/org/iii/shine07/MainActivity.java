@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
         timer = new Timer();
         uiHandler = new UIHandler();
 
-        left = (Button)findViewById(R.id.btnleft);
-        right = (Button)findViewById(R.id.btnright);
+        left = (Button)findViewById(R.id.btnLeft);
+        right = (Button)findViewById(R.id.btnRight);
         clock = (TextView)findViewById(R.id.timer);
 
     }
@@ -45,7 +45,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void doLeft(View v){
-
+        if (isRunning){
+            doLap();
+        }else{
+            doReset();
+        }
     }
     public void doRight(View v){
         isRunning = !isRunning;
@@ -66,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
         clockTask.cancel();
     }
     private void doReset(){
-
+        Counter = 0;
+        uiHandler.sendEmptyMessage(0);
     }
     private void doLap(){
 
@@ -85,6 +90,11 @@ public class MainActivity extends AppCompatActivity {
             super.handleMessage(msg);
             clock.setText("" + Counter);
         }
+    }
+
+    static String counter2Clock(int counter){
+
+        return "00:01:02.12";
     }
 
 }
